@@ -1,3 +1,10 @@
+// Trabalho Prático de LFA
+// Algoritmo CYK
+
+// Guilherme Alves
+// Henrique Jensen
+// Lucas Pedroso
+
 import java.io.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -13,16 +20,16 @@ public class Main {
 	private static Map<String, List<String>> regrasGLC;
 	private static String mat [][];
 	
-	// Método principal
+	// Metodo principal
 	
 	public static void main (String[] args) throws FileNotFoundException {
 		
-		// Caso não passe os 3 argumentos		
+		// Caso nao passe os 3 argumentos		
 		if (args.length == 3) {
 	
 			arqentrada = args[0]; // Arquivo de Entrada
 			palavra = args[1]; // Palavra
-			arqsaida = args[2]; // Arquivo de Saída
+			arqsaida = args[2]; // Arquivo de Saida
 			regrasGLC = new HashMap<String, List<String>>(); // HashMap de List de String
 			
 			leitura ();    			
@@ -44,19 +51,19 @@ public class Main {
 			
 	        cyk ();
 	        padronizar ();
-	        imprimir ();
+	        //imprimir ();
 	        writeFile ();
         
 		}
 		
 		else {
-			System.out.println("Argumentos Inválidos");
+			System.out.println("Argumentos Invalidos");
 		}
 	
 	}
 	
 	
-	// Método para a leitura do arquivo
+	// Metodo para a leitura do arquivo
 	
 	public static void leitura () throws FileNotFoundException {
 	
@@ -64,17 +71,17 @@ public class Main {
 		String direita;
 		String simbolo;
 				
-		// O useDelimiter(regex) utiliza a expressão regular "[^aA-zZ]+" que desconsidera
-		// Todos os caracteres que não são letras do alfabeto na hora da leitura
+		// O useDelimiter(regex) utiliza a expressao regular "[^aA-zZ]+" que desconsidera
+		// Todos os caracteres que nao sao letras do alfabeto na hora da leitura
 		
 		Scanner leitura = new Scanner(new FileReader(arqentrada)).useDelimiter("[^aA-zZ.]+");
 		
-		while (leitura.hasNext()) { // Caso ainda seja possível ler o arquivo
+		while (leitura.hasNext()) { // Caso ainda seja possivel ler o arquivo
 			
-			simbolo = leitura.next(); // Então é lido o próximo símbolo
+			simbolo = leitura.next(); // Entao e lido o proximo simbolo
 			
-			// Caso o símbolo seja do lado esquerdo
-			// Eu apenas armazeno ele para utilizá-lo depois
+			// Caso o simbolo seja do lado esquerdo
+			// Eu apenas armazeno ele para utiliza-lo depois
 			
 			if (simbolo.matches("[A-Z]")) { 
 				
@@ -86,8 +93,8 @@ public class Main {
 							
 				direita = simbolo;
 				
-				// Caso a símbolo do lado direito ainda não esteja no HashMap,
-				// Ele é inserido como chave no HashMap, com uma lista de string nula
+				// Caso a simbolo do lado direito ainda nao esteja no HashMap,
+				// Ele e inserido como chave no HashMap, com uma lista de string nula
 				
 				if (regrasGLC.get(direita) == null) {
 				
@@ -96,8 +103,8 @@ public class Main {
 					
 				}
 				
-				// Depois, eu busco o HashMap pelo símbolo do direita
-				// E insiro o símbolo da esquerda (que eu armazei antes) na lista
+				// Depois, eu busco o HashMap pelo simbolo do direita
+				// E insiro o simbolo da esquerda (que eu armazei antes) na lista
 				
 				List<String> listaAux = regrasGLC.get(direita);
 				listaAux.add(esquerda);
@@ -112,7 +119,7 @@ public class Main {
 	}
 	
 	
-	// Método que irá realizar os cálculos do CYK
+	// Metodo que ira realizar os calculos do CYK
 		
 	public static void cyk () {
 		
@@ -150,7 +157,7 @@ public class Main {
         for (i=1; i<linha; i++) {
             for (j=0; j<limite; j++) {
             	
-            	// A linha 1 da matriz é diferente porque apenas ela 
+            	// A linha 1 da matriz e diferente porque apenas ela 
             	// Compara com a linha 0 para ver quem gera os terminais
             	// Para isso vamos criar um if apenas para ela
             	
@@ -158,25 +165,25 @@ public class Main {
             		
             		// Esse for percorre todo o HashMap
             		
-            		// Entrada é a combinação de uma chave com a sua respectiva lista
-            		// De variaváeis (do lado esquerdo) que a geram
+            		// Entrada e a combinacao de uma chave com a sua respectiva lista
+            		// De variavaeis (do lado esquerdo) que a geram
             		
 	                for (Map.Entry<String, List<String>> entrada : regrasGLC.entrySet()) {
 	                	
 	                    String chave = entrada.getKey();
 
 	                   
-	                    // Encontro a chave no HashMap que é igual ao terminal daquela posição da matriz
+	                    // Encontro a chave no HashMap que e igual ao terminal daquela posicao da matriz
 	                    if (mat[0][j].equals(chave)) {
 	                    	
 	                    	//System.out.println("mat: " + mat[0][j] + " chave: " + chave);
 	                    	
 		                    List<String> lista = entrada.getValue();
 		                    
-		                    // Nesse for, eu coloco TODAS as variáveis que geram aquele terminal
-		                    // Em uma posição da matriz
+		                    // Nesse for, eu coloco TODAS as variaveis que geram aquele terminal
+		                    // Em uma posicao da matriz
 		                    
-		                    // Caso mais de uma variável gere o terminal, será concatenado
+		                    // Caso mais de uma variavel gere o terminal, sera concatenado
 		                    // Tudo em uma string: Exemplo: ABC
 		                    
 	                    	for(k=0; k<lista.size(); k++) {
@@ -189,25 +196,25 @@ public class Main {
             		
             	}
             	
-            	// A partir da linha 2, será entrado nesse else para realizar as comparações
+            	// A partir da linha 2, sera entrado nesse else para realizar as comparacões
             	
             	else {
             		            	
-	            	// Percorre todas as linhas anteriores para fazer as comparações
+	            	// Percorre todas as linhas anteriores para fazer as comparacões
 	            	
         			// Aqui eu percorro uma coluna e uma diagonal ao mesmo tempo
-		            // E realizo as comarações
+		            // E realizo as comaracões
             		
             		for (k=i-1; k>0; k--) {
 
-            			// Para cada posição da matriz, talvez tenha de mais uma variável
-            			// Exemplo: AB compara com TX. Daí se faz a permutação
+            			// Para cada posicao da matriz, talvez tenha de mais uma variavel
+            			// Exemplo: AB compara com TX. Dai se faz a permutacao
             			// AT, AX, BT e BX. Para isso serve esses 2 for
             			
             			for (a=0; a<mat[k][j].length(); a++) { 
             				for (b=0; b<mat[i-k][k+j].length(); b++) {
             					
-            					// Nessa parte eu concateno duas varíaveis
+            					// Nessa parte eu concateno duas variaveis
             					// Seguindo o exemplo anterior: AB compara com TX
             					// Nessa parte eu concatenaria A com T para formar AT
             					
@@ -225,17 +232,17 @@ public class Main {
             		                    List<String> lista = entrada.getValue();
             		                    
             		                    // Como encontrou o AT em alguma chave do HashMap
-            		                    // Então pego a lista do HashMap de AT e insiro todos os elementos
-            		                    // Da lista (que no caso são as variáveis que deviram AT) 
-            		                    // Na posição da matriz [i][j]
+            		                    // Entao pego a lista do HashMap de AT e insiro todos os elementos
+            		                    // Da lista (que no caso sao as variaveis que deviram AT) 
+            		                    // Na posicao da matriz [i][j]
             	                    	for (x=0; x<lista.size(); x++) {
             	                    		
             	                    		int contador = 0;
             	                    		
-            	                    		// Porém antes se iserir as variáveis que derivam AT
+            	                    		// Porem antes se iserir as variaveis que derivam AT
             	                    		// Exemplo: S -> AT e F -> AT
-            	                    		// Mas suponha que F já esteja inserido na posição da matriz
-            	                    		// Então antes de inserir o F, verifico se já existe na mat[i][j]
+            	                    		// Mas suponha que F ja esteja inserido na posicao da matriz
+            	                    		// Entao antes de inserir o F, verifico se ja existe na mat[i][j]
             	                    		
             	                    		for (y=0; y<mat[i][j].length(); y++) {
             	                    			
@@ -244,7 +251,7 @@ public class Main {
             	                    			}
             	                    		}
             	                    		
-            	                    		// Se não existe a palavra, eu inserio a variável na matriz
+            	                    		// Se nao existe a palavra, eu inserio a variavel na matriz
             	                    		if (contador == 0) {            	                    		
             	                    			mat[i][j] = mat[i][j] + lista.get(x);
             	                    		}
@@ -255,11 +262,11 @@ public class Main {
             	                    
             	                } // Fim do percurso no HashMap
             						
-            				} // Fim do for das permutações de b
+            				} // Fim do for das permutacões de b
             				
-            			} // Fim do for das permutações de a
+            			} // Fim do for das permutacões de a
 
-            		} // Fim do for que percorre as linhas anteriores para a comparação
+            		} // Fim do for que percorre as linhas anteriores para a comparacao
 	            	
             	} // Fim do else
 
@@ -273,7 +280,7 @@ public class Main {
         
 	}	
 	
-	// Método para padronizar a matriz com as {} e vírgulas
+	// Metodo para padronizar a matriz com as {} e virgulas
 	
 	public static void padronizar () {
 	
@@ -288,12 +295,12 @@ public class Main {
         for (i=1; i<linha; i++) {
             for (j=0; j<limite; j++) {
             	
-            	// Caso contenha apenas uma ou nenhuma varíavel, colocamos {VARIAVEL} ou {}          	
+            	// Caso contenha apenas uma ou nenhuma variavel, colocamos {VARIAVEL} ou {}          	
             	if (mat[i][j].length() <= 1) {
             		mat[i][j] = "{" + mat[i][j] + "}";
             	}
             	
-            	// Caso haja mais de uma variável, colocamos as vírgulas
+            	// Caso haja mais de uma variavel, colocamos as virgulas
             	else {
             		
             		String auxiliar = "";
@@ -309,7 +316,7 @@ public class Main {
             	
             }
             
-            // Na segunda linha, o limite não diminui 
+            // Na segunda linha, o limite nao diminui 
             // Pois ela tem a mesma quantidade de colunas da primeira linha
             if (i != 0) {
             	limite--;
@@ -335,7 +342,7 @@ public class Main {
             for (j=0; j<limite; j++) {
             	System.out.print(mat[i][j] + "\t");
             }
-            // Na segunda linha, o limite não diminui 
+            // Na segunda linha, o limite nao diminui 
             // Pois ela tem a mesma quantidade de colunas da primeira linha
             if (i != 0) {
             	limite--;
@@ -352,6 +359,8 @@ public class Main {
 			int tam = palavra.length();
 			int i, j;
 			
+			String quebraLinha = System.lineSeparator();
+			
 			int linha = tam+1;      
 			//limite comeca em 1 pois se deve imprimir apenas 1 elemento no comeco do loop e ir aumentando
 			int limite = 1;
@@ -359,11 +368,20 @@ public class Main {
 		    PrintWriter escrita = new PrintWriter (arqsaida);
 						
 	        for (i=linha-1; i>=0; i--) {
+	        	
+	        	if (i == 0) {
+	        		 escrita.write("p\t");
+	        	}
+	        	else {
+	        		 escrita.write(i + "\t");
+	        	}
+	        	
 	            for (j=0; j<limite; j++) {
 	            	escrita.write(mat[i][j] + "\t");
 	            }
-	            escrita.write("\n");
-	            // Na penultima linha, o limite não aumenta
+	            escrita.write(quebraLinha);
+	            
+	            // Na penultima linha, o limite nao aumenta
 	            // Pois ela tem a mesma quantidade de colunas da primeira linha
 	            if (i > 1) {
 	            	limite++;
@@ -371,8 +389,8 @@ public class Main {
 	        }	        
 	        escrita.close();
 		}
-        catch(FileNotFoundException e) {
-            System.err.println("Arquivo de saida nao encontrado.");
+        catch (FileNotFoundException e) {
+            System.err.println("Arquivo de Saida nao Encontrado");
         }
 	}
 
